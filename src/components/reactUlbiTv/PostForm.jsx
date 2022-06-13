@@ -6,7 +6,9 @@ const PostForm = (props) => {
   const [post, setPost] = useState({ title: "", body: "" });
   const addNewPost = (e) => {
     e.preventDefault();
-    props.createPost(post);
+    if (post.title && post.body) {
+      props.createPost(post);
+    }
   };
   return (
     <form action="">

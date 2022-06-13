@@ -2,7 +2,12 @@
     padding: 10px;
     border-radius: 10px;
     border: none;
-    color: white;
-    background-color: rgb(203, 160, 244);
+    color: rgb(255, 255, 255);
+    color: #61dafb;
+    /* background-color: #61dafb;
+    background-color: white; */
+    background-color: transparent;
     margin: 0 10px 0 10px; 
+    min-width: 100px;
+    border: 2px solid #61dafb;
 }
