@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "../../styles/UlbiTv.css";
-import MyButton from "../UI/button/MyButton";
-import MyInput from "../UI/input/MyInput";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
 
@@ -17,12 +15,16 @@ const ReactUlbiTv = () => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
   };
   const removePost = (post) => {
-    setPosts(posts.filter(p => p.id !== post.id));
-  }
+    setPosts(posts.filter((p) => p.id !== post.id));
+  };
   return (
     <div>
       <PostForm createPost={createPost} />
-      <PostList removePost={removePost} posts={posts} />
+      {posts.length > 0 ? (
+        <PostList removePost={removePost} posts={posts} />
+      ) : (
+        <div>Net</div>
+      )}
     </div>
   );
 };
