@@ -7,10 +7,10 @@ import PostList from "./PostList";
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
-    { id: 1, title: "3Java Script", body: "2Description" },
-    { id: 2, title: "2Java Script 2", body: "3Description" },
-    { id: 3, title: "3Java Script", body: "4Description" },
-    { id: 4, title: "4ava Script", body: "1Description" },
+    { id: 1, title: "aa Script", body: "2Description" },
+    { id: 2, title: "bb Script 2", body: "3Description" },
+    { id: 3, title: "bb Script", body: "4Description" },
+    { id: 4, title: "cc Script", body: "1Description" },
   ]);
   const [selectedSort, setSelectedSort] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +26,10 @@ const ReactUlbiTv = () => {
       return posts;
     }
   }, [posts, selectedSort]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery))
+  }, [searchQuery, sortedPosts])
 
   const createPost = (newPost) => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
@@ -53,8 +57,8 @@ const ReactUlbiTv = () => {
         ]}
         defaultValue="сортировка по"
       />
-      {posts.length > 0 ? (
-        <PostList removePost={removePost} posts={sortedPosts} />
+      {sortedAndSearchedPosts.length > 0 ? (
+        <PostList removePost={removePost} posts={sortedAndSearchedPosts} />
       ) : (
         <div>Постов нет</div>
       )}
