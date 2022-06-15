@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "../../styles/UlbiTv.css";
 import MyInput from "../UI/input/MyInput";
 import MySelect from "../UI/select/MySelect";
@@ -15,8 +15,9 @@ const ReactUlbiTv = () => {
   const [selectedSort, setSelectedSort] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const getSortedPosts = () => {
-    console.log("getSortedPosts");
+
+  const sortedPosts = useMemo(() =>{
+    console.log("sortedPosts");
     if (selectedSort) {
       return [...posts].sort((a, b) =>
         a[selectedSort].localeCompare(b[selectedSort])
@@ -24,8 +25,7 @@ const ReactUlbiTv = () => {
     } else {
       return posts;
     }
-  };
-  const sortedPosts = getSortedPosts();
+  }, [posts, selectedSort]);
 
   const createPost = (newPost) => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
