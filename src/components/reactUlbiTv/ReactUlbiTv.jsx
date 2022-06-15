@@ -15,7 +15,17 @@ const ReactUlbiTv = () => {
   const [selectedSort, setSelectedSort] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-
+  const getSortedPosts = () => {
+    console.log("getSortedPosts");
+    if (selectedSort) {
+      return [...posts].sort((a, b) =>
+        a[selectedSort].localeCompare(b[selectedSort])
+      );
+    } else {
+      return posts;
+    }
+  };
+  const sortedPosts = getSortedPosts();
 
   const createPost = (newPost) => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
@@ -25,16 +35,15 @@ const ReactUlbiTv = () => {
   };
   const sortPosts = (sort) => {
     setSelectedSort(sort);
-    console.log(selectedSort);
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
   };
   return (
     <div>
       <PostForm createPost={createPost} />
-      <MyInput  
-      value={searchQuery}
-      onChange={e => setSearchQuery(e.targer.value)}
-      placeholder="Поиск" />
+      <MyInput
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Поиск"
+      />
       <MySelect
         onChange={sortPosts}
         value={selectedSort}
@@ -45,7 +54,7 @@ const ReactUlbiTv = () => {
         defaultValue="сортировка по"
       />
       {posts.length > 0 ? (
-        <PostList removePost={removePost} posts={posts} />
+        <PostList removePost={removePost} posts={sortedPosts} />
       ) : (
         <div>Постов нет</div>
       )}
