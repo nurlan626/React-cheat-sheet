@@ -6,7 +6,6 @@ import PostList from "./PostList";
 import PostsFilter from "./PostsFilter";
 import MyButton from "../UI/button/MyButton";
 import { usePosts } from "../../hooks/usePosts";
-import axios from "axios";
 import PostService from "../../API/PostService";
 
 const ReactUlbiTv = () => {
@@ -19,6 +18,7 @@ const ReactUlbiTv = () => {
 
   const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const sortedAndSearchedPosts = usePosts(
     posts,
@@ -34,15 +34,17 @@ const ReactUlbiTv = () => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
   const fetchPosts = async () => {
+    setLoading(true);
     const posts = await PostService.getAll();
     setPosts(posts);
+    setLoading(false)
   };
   useEffect(() => {
     fetchPosts();
   }, []);
 
   return (
-    <div>
+    <div className="UlbiTv">
       <MyButton onClick={() => setModal(true)}>Add new post</MyButton>
 
       <MyModal modal={modal} setModal={(e) => setModal()}>
@@ -50,7 +52,7 @@ const ReactUlbiTv = () => {
       </MyModal>
 
       <PostsFilter filter={filter} setFilter={setFilter} />
-      <PostList removePost={removePost} posts={sortedAndSearchedPosts} />
+      <PostList removePost={removePost} posts={sortedAndSearchedPosts} loading={loading} />
     </div>
   );
 };
