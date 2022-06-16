@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import "../../styles/UlbiTv.css";
 import MyModal from "../UI/modal/MyModal";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
 import PostsFilter from "./PostsFilter";
 import MyButton from "../UI/button/MyButton"; 
+import { useSortedAndSearchedPosts } from "../../hooks/usePosts";
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
@@ -17,23 +18,7 @@ const ReactUlbiTv = () => {
   const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
   const [modal, setModal] = useState(false);
 
-  const sortedPosts = useMemo(() => {
-    console.log("sortedPosts");
-    if (filter.selectedSort) {
-      return [...posts].sort((a, b) =>
-        a[filter.selectedSort].localeCompare(b[filter.selectedSort])
-      );
-    } else {
-      return posts;
-    }
-  }, [posts, filter.selectedSort]);
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(filter.searchQuery)
-    );
-  }, [filter.searchQuery, sortedPosts]);
-
+  const sortedAndSearchedPosts = useSortedAndSearchedPosts(filter.selectetSort, posts, filter.searchQuery );
   const createPost = (newPost) => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
     setModal(false);
