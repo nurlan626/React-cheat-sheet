@@ -12,7 +12,7 @@ const PostsFilter = ({filter, setFilter}) => {
       />
       <MySelect
         value={setFilter.selectetSort}
-        onChange={selectedSort => setFilter({...filter, selectedSort: selectedSort})}
+        onChange={selectedSort => setFilter({...filter, selectetSort: selectedSort})}
         options={[
           { name: "по названию", value: "title" },
           { name: "по описанию", value: "body" },

@@ -1,32 +1,33 @@
 import { useMemo } from "react";
 
-export  const useSortedPosts = (selectedSort, posts ) => {
-    const sortedPosts = useMemo(() => {
-        console.log("sortedPosts");
-        if (selectedSort) {
-          return [...posts].sort((a, b) =>
-            a[selectedSort].localeCompare(b[selectedSort])
-          );
-        } else {
-          return posts;
-        }
-      }, [posts, selectedSort]);
+export const useSortedPosts = (posts, selectedSort) => {
+  const sortedPosts = useMemo(() => {
+    console.log("sortedPosts");
+    if (selectedSort) {
+      return [...posts].sort((a, b) =>
+        a[selectedSort].localeCompare(b[selectedSort])
+      );
+    } else {
+      return posts;
+    }
+  }, [posts, selectedSort]);
 
-      return sortedPosts;
+  return sortedPosts;
+};
 
-}
+export const usePosts = (posts, selectedSort, searchQuery) => {
+  const sortedPosts = useSortedPosts(posts, selectedSort);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter((post) =>
+      post.title.toLowerCase().includes(searchQuery)
+    );
+  }, [searchQuery, sortedPosts]);
+
+  console.log("usePosts");
+  console.log(selectedSort);
+  console.log(searchQuery);
 
 
-export const useSortedAndSearchedPosts = (selectedSort, posts, searchQuery) => {
-    const sortedPosts = useSortedPosts(selectedSort, posts);
-    const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter((post) =>
-          post.title.toLowerCase().includes(searchQuery)
-        );
-      }, [searchQuery, sortedPosts]);
-
-      return sortedAndSearchedPosts;
-
-}
-
-
+  return sortedAndSearchedPosts;
+};
