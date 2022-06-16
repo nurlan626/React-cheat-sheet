@@ -10,8 +10,8 @@ const PostItem = (props) => {
       <div className="post">
         <div className="post__contnent">
           <div>{props.number}.</div>
-          <div>title: {props.post.title}</div>
-          <div>body:  {props.post.body}</div>
+          <div><div><u>title:</u></div> {props.post.title}</div>
+          <div><div><u>body: </u></div>{props.post.body}</div>
         </div>
         <div className="post__btns">
           <MyButton onClick={removePost}>Delete</MyButton>

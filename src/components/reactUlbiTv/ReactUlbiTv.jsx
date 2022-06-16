@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/UlbiTv.css";
 import MyModal from "../UI/modal/MyModal";
 import PostForm from "./PostForm";
@@ -7,6 +7,7 @@ import PostsFilter from "./PostsFilter";
 import MyButton from "../UI/button/MyButton";
 import { usePosts } from "../../hooks/usePosts";
 import axios from "axios";
+import PostService from "../../API/PostService";
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
@@ -32,17 +33,16 @@ const ReactUlbiTv = () => {
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
-
   const fetchPosts = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    setPosts(response.data);
+    const posts = await PostService.getAll();
+    setPosts(posts);
   };
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <div>
-      <MyButton onClick={fetchPosts}>Fet fetch</MyButton>
       <MyButton onClick={() => setModal(true)}>Add new post</MyButton>
 
       <MyModal modal={modal} setModal={(e) => setModal()}>
