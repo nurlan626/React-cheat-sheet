@@ -3,11 +3,11 @@
     border-radius: 10px;
     border: none;
     color: rgb(255, 255, 255);
-    color: #61dafb;
+    color: #4faec8;
     /* background-color: #61dafb;
     background-color: white; */
     background-color: transparent;
     margin: 0 10px 0 10px; 
     min-width: 100px;
-    border: 2px solid #61dafb;
+    border: 2px solid #4faec8;
 }

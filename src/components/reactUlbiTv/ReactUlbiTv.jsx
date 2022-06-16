@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
 import "../../styles/UlbiTv.css";
-import MyInput from "../UI/input/MyInput";
-import MySelect from "../UI/select/MySelect";
+import MyModal from "../UI/modal/MyModal";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
+import PostsFilter from "./PostsFilter";
+import MyButton from "../UI/button/MyButton"; 
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
@@ -12,56 +13,46 @@ const ReactUlbiTv = () => {
     { id: 3, title: "bb Script", body: "4Description" },
     { id: 4, title: "cc Script", body: "1Description" },
   ]);
-  const [selectedSort, setSelectedSort] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
 
+  const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
+  const [modal, setModal] = useState(false);
 
-  const sortedPosts = useMemo(() =>{
+  const sortedPosts = useMemo(() => {
     console.log("sortedPosts");
-    if (selectedSort) {
+    if (filter.selectedSort) {
       return [...posts].sort((a, b) =>
-        a[selectedSort].localeCompare(b[selectedSort])
+        a[filter.selectedSort].localeCompare(b[filter.selectedSort])
       );
     } else {
       return posts;
     }
-  }, [posts, selectedSort]);
+  }, [posts, filter.selectedSort]);
 
   const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery))
-  }, [searchQuery, sortedPosts])
+    return sortedPosts.filter((post) =>
+      post.title.toLowerCase().includes(filter.searchQuery)
+    );
+  }, [filter.searchQuery, sortedPosts]);
 
   const createPost = (newPost) => {
     setPosts([...posts, { id: Date.now(), ...newPost }]);
+    setModal(false);
   };
+
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-  };
+
   return (
     <div>
-      <PostForm createPost={createPost} />
-      <MyInput
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Поиск"
-      />
-      <MySelect
-        onChange={sortPosts}
-        value={selectedSort}
-        options={[
-          { name: "по названию", value: "title" },
-          { name: "по описанию", value: "body" },
-        ]}
-        defaultValue="сортировка по"
-      />
-      {sortedAndSearchedPosts.length > 0 ? (
-        <PostList removePost={removePost} posts={sortedAndSearchedPosts} />
-      ) : (
-        <div>Постов нет</div>
-      )}
+      <MyButton onClick={() => setModal(true)}>Add new post</MyButton>
+      
+      <MyModal modal={modal} setModal={(e) => setModal()}>
+        <PostForm createPost={createPost} />
+      </MyModal>
+
+      <PostsFilter filter={filter} setFilter={setFilter} />
+      <PostList removePost={removePost} posts={sortedAndSearchedPosts} />
     </div>
   );
 };

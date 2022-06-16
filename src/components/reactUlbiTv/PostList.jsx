@@ -1,17 +1,30 @@
-import React from 'react'
-import PostItem from './PostItem'
+import React from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import PostItem from "./PostItem";
 
-const PostList = (props) => {
+const PostList = ({ posts, removePost }) => {
   return (
     <div>
-        <h1>List of posts</h1>
-        {props.posts.map((post, index) => {
-        return(
-          <PostItem removePost={props.removePost} number={index+1} post={post} key={post.id}/>
-        )
-      })}
+      <h1>List of posts</h1>
+      <TransitionGroup>
+        {posts.length > 0 ? (
+          posts.map((post, index) => {
+            return (
+              <CSSTransition key={post.id} timeout={500} classNames="post">
+                <PostItem
+                  removePost={removePost}
+                  number={index + 1}
+                  post={post}
+                />
+              </CSSTransition>
+            );
+          })
+        ) : (
+          <div>Постов нет</div>
+        )}
+      </TransitionGroup>
     </div>
-  )
-}
+  );
+};
 
-export default PostList
+export default PostList;

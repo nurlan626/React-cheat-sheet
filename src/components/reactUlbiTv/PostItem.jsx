@@ -4,7 +4,6 @@ import MyButton from "../UI/button/MyButton";
 const PostItem = (props) => {
   const removePost = () => {
     props.removePost(props.post);
-    console.log(props.post);
   }
   return (
     <div>

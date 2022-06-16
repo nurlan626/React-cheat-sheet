@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import MyButton from "../UI/button/MyButton";
 import MyInput from "../UI/input/MyInput";
 
-const PostForm = (props) => {
+const PostForm = ({ createPost }) => {
   const [post, setPost] = useState({ title: "", body: "" });
+
   const addNewPost = (e) => {
     e.preventDefault();
     if (post.title && post.body) {
-      props.createPost(post);
+      createPost(post);
     }
+    setPost({ title: "", body: "" });
   };
   return (
     <form action="">
