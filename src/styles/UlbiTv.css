@@ -29,3 +29,18 @@
   opacity: 0;
   transition: opacity 500ms ease-in;
 }
+
+.page{
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  color: rgb(255, 255, 255);
+  color: #4faec8;
+  background-color: transparent;
+  margin: 10px 0 10px 0; 
+  min-width: 100px;
+  border: 2px solid #4faec8;
+}
+.currentPage{
+  background-color: white;
+}

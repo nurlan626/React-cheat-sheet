@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "../../styles/UlbiTv.css";
 import MyModal from "../UI/modal/MyModal";
 import PostForm from "./PostForm";
@@ -8,6 +8,8 @@ import MyButton from "../UI/button/MyButton";
 import { usePosts } from "../../hooks/usePosts";
 import PostService from "../../API/PostService";
 import { useFetch } from "../../hooks/useFetch";
+import { getPageCount, getPagesArray } from "../../utils/pages";
+import Pagination from "../UI/pagination/Pagination";
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
@@ -19,9 +21,16 @@ const ReactUlbiTv = () => {
 
   const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
   const [modal, setModal] = useState(false);
+  const [totalPages, setTotalPages] = useState();
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+
   const [fetchPosts, loading, error] = useFetch(async () => {
-    const posts = await PostService.getAll();
-    setPosts(posts);
+    const response = await PostService.getAll(limit, page);
+    setPosts(response.data);
+    const totalPosts = response.headers["x-total-count"];
+    setTotalPages(getPageCount(totalPosts, limit));
+    console.log(totalPages);
   });
 
   const sortedAndSearchedPosts = usePosts(
@@ -40,7 +49,7 @@ const ReactUlbiTv = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [page]);
 
   return (
     <div className="UlbiTv">
@@ -51,12 +60,16 @@ const ReactUlbiTv = () => {
       </MyModal>
 
       <PostsFilter filter={filter} setFilter={setFilter} />
-      {error ? <div>{error}</div> :  <PostList
-        removePost={removePost}
-        posts={sortedAndSearchedPosts}
-        loading={loading}
-      />}
-     
+      {error ? (
+        <div>{error}</div>
+      ) : (
+        <PostList
+          removePost={removePost}
+          posts={sortedAndSearchedPosts}
+          loading={loading}
+        />
+      )}
+      <Pagination totalPages={totalPages} setPage={setPage} page={page} />
     </div>
   );
 };

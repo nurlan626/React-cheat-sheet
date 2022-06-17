@@ -2,7 +2,6 @@ import { useMemo } from "react";
 
 export const useSortedPosts = (posts, selectedSort) => {
   const sortedPosts = useMemo(() => {
-    console.log("sortedPosts");
     if (selectedSort) {
       return [...posts].sort((a, b) =>
         a[selectedSort].localeCompare(b[selectedSort])
@@ -23,11 +22,6 @@ export const usePosts = (posts, selectedSort, searchQuery) => {
       post.title.toLowerCase().includes(searchQuery)
     );
   }, [searchQuery, sortedPosts]);
-
-  console.log("usePosts");
-  console.log(selectedSort);
-  console.log(searchQuery);
-
 
   return sortedAndSearchedPosts;
 };

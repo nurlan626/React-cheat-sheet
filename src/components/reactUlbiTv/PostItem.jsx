@@ -9,7 +9,8 @@ const PostItem = (props) => {
     <div>
       <div className="post">
         <div className="post__contnent">
-          <div>{props.number}.</div>
+          {/* <div>{props.number}.</div> */}
+         <div>{props.post.id}</div>
           <div><div><u>title:</u></div> {props.post.title}</div>
           <div><div><u>body: </u></div>{props.post.body}</div>
         </div>
