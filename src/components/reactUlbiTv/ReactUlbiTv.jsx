@@ -7,6 +7,7 @@ import PostsFilter from "./PostsFilter";
 import MyButton from "../UI/button/MyButton";
 import { usePosts } from "../../hooks/usePosts";
 import PostService from "../../API/PostService";
+import { useFetch } from "../../hooks/useFetch";
 
 const ReactUlbiTv = () => {
   const [posts, setPosts] = useState([
@@ -18,7 +19,10 @@ const ReactUlbiTv = () => {
 
   const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
   const [modal, setModal] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [fetchPosts, loading, error] = useFetch(async () => {
+    const posts = await PostService.getAll();
+    setPosts(posts);
+  });
 
   const sortedAndSearchedPosts = usePosts(
     posts,
@@ -33,12 +37,7 @@ const ReactUlbiTv = () => {
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
-  const fetchPosts = async () => {
-    setLoading(true);
-    const posts = await PostService.getAll();
-    setPosts(posts);
-    setLoading(false)
-  };
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -52,7 +51,12 @@ const ReactUlbiTv = () => {
       </MyModal>
 
       <PostsFilter filter={filter} setFilter={setFilter} />
-      <PostList removePost={removePost} posts={sortedAndSearchedPosts} loading={loading} />
+      {error ? <div>{error}</div> :  <PostList
+        removePost={removePost}
+        posts={sortedAndSearchedPosts}
+        loading={loading}
+      />}
+     
     </div>
   );
 };
