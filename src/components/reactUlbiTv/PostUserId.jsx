@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const PostUserId = () => {
   const { id } = useParams();
@@ -9,7 +9,7 @@ const PostUserId = () => {
   const fetch = async () => {
     try {
       const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/1/comments`
+        `https://jsonplaceholder.typicode.com/users/${id}`
       );
       setUser(response.data);
     } catch (e) {
@@ -21,8 +21,20 @@ const PostUserId = () => {
     fetch();
   }, []);
   return (
-    <div>{user.name}</div>
-  )
-}
+    <>
+      <div>User info</div>
+      <div>
+        {user && (
+          <div>
+            <div>name: {user.name}</div>
+            <div>username: {user.username}</div>
+            <div>email: {user.email}</div>
+            <div>website: {user.website}</div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
-export default PostUserId
+export default PostUserId;

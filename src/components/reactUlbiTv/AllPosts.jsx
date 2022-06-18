@@ -39,7 +39,7 @@ const AllPosts = () => {
     filter.searchQuery
   );
   const createPost = (newPost) => {
-    setPosts([...posts, { id: Date.now(), ...newPost }]);
+    setPosts([{ id: Date.now(), ...newPost }, ...posts]);
     setModal(false);
   };
 

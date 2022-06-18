@@ -14,9 +14,7 @@ const Navbar = () => {
       <NavLink to="allPosts" className="Link">
         All Posts
       </NavLink>
-      <NavLink to="post" className="Link">
-        post
-      </NavLink>
+
     </nav>
   );
 };

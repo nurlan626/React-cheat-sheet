@@ -13,7 +13,6 @@ const PostComment = () => {
         `https://jsonplaceholder.typicode.com/posts/${id}/comments`
       );
       setComment(response.data);
-      console.log(comment);
     } catch (e) {
     } finally {
     }

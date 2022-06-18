@@ -42,7 +42,7 @@ const PostDetails = () => {
         </div>}
         <nav className="nestedNav">
         <MyButton onClick={() => navigate(`post-comment/${post.id}`)}>comments</MyButton>
-        <MyButton onClick={() => navigate(`post-userId/${post.id}`)}>User information</MyButton>
+        <MyButton onClick={() => navigate(`post-userId/${post.userId}`)}>User information</MyButton>
       </nav>
       <Outlet />
     </div>
