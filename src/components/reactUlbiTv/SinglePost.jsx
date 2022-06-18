@@ -8,7 +8,7 @@ const SinglePost = () => {
       <button onClick={() => navigate("/allposts", { replace: true })}>
         Navigating Programmatically go to All Posts
       </button>
-      <nav class="nestedNav">
+      <nav className="nestedNav">
         <Link to="post-comment">comments </Link>
         <Link to="post-userId">user</Link>
       </nav>

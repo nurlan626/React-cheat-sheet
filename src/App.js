@@ -43,9 +43,12 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="/allposts" element={<AllPosts />} />
             <Route path="/allposts/:id" element={<PostDetails />}>
-              <Route index element={<PostUserId />} />
-              <Route path="post-comment" element={<PostComment />} />
-              <Route path="post-userId" element={<PostUserId />} />
+              {/* <Route index element={<PostUserId />} /> */}
+              {/* <Route path="post-comment" element={<PostComment />} /> */}
+              <Route path="post-comment/:id" element={<PostComment />} />
+              {/* <Route path="post-userId" element={<PostUserId />} /> */}
+              <Route path="post-userId/:id" element={<PostUserId />} />
+
             </ Route>
 
             <Route path="*" element={<Home />} />
