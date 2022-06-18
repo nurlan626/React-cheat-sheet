@@ -5,7 +5,7 @@ import "./App.css";
 // import Features from "./components/Features"
 // import ClassCounter from "./components/class/ClassCounter";
 import ReactUlbiTv from "./components/reactUlbiTv/ReactUlbiTv";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Navbar from "./components/UI/navbar/Navbar";
 
@@ -32,7 +32,7 @@ function App() {
         </header> */}
       <header className="App-header">
         <BrowserRouter>
-          <Navbar />
+        <Navbar />
           <Routes>
             <Route path="/" element={<ReactUlbiTv />} />
             <Route path="about" element={<About />} />
