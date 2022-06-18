@@ -3,3 +3,9 @@
     text-decoration: none;
     margin: 10px;
   }
+
+  .Link.active{
+    color: rgb(109, 0, 149);
+    text-decoration: none;
+    margin: 10px;
+  }

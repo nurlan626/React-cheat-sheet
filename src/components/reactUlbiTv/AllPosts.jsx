@@ -11,7 +11,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { getPageCount, getPagesArray } from "../../utils/pages";
 import Pagination from "../UI/pagination/Pagination";
 
-const ReactUlbiTv = () => {
+const AllPosts = () => {
   const [posts, setPosts] = useState([
     { id: 1, title: "1", body: "4" },
     { id: 2, title: "  2", body: "3" },
@@ -22,7 +22,7 @@ const ReactUlbiTv = () => {
   const [filter, setFilter] = useState({ searchQuery: "", selectetSort: "" });
   const [modal, setModal] = useState(false);
   const [totalPages, setTotalPages] = useState();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(100);
   const [page, setPage] = useState(1);
 
   const [fetchPosts, loading, error] = useFetch(async () => {
@@ -74,4 +74,4 @@ const ReactUlbiTv = () => {
   );
 };
 
-export default ReactUlbiTv;
+export default AllPosts;
